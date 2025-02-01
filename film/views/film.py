@@ -99,3 +99,8 @@ class VideoStreamAPIView(APIView):
                 return response
 
         return FileResponse(open(video_path, 'rb'), content_type='video/mp4')
+
+
+class HelloWorld(APIView):
+    def get(self):
+        return Response({"message" : "Hello world"})

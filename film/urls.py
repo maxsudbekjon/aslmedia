@@ -7,7 +7,7 @@ from film.views import  ActorDeleteAPIView,  \
     WishListDeleteAPIView, WishListCreateAPIView, BookmarkCreateAPIView, BookmarkDeleteAPIView, BookmarkAPIView, \
     PremiereFilmListAPIView, FilmSearchView, HarfSearchAPIView, MostViewedAPIView, LastTranslatedAPIView, \
     update_password, FilmListAPIView, foreign_movies, RussianAPIView, TrailerAPIView, genre_films, \
-    SerialAPIView, CartonAPIView, VideoStreamAPIView, FilmDetailAPIView, FilmCalendarListAPIView, FilmByYearApiView
+    SerialAPIView, CartonAPIView, VideoStreamAPIView, FilmDetailAPIView, FilmCalendarListAPIView, FilmByYearApiView,HelloWorld
 
 
 urlpatterns = [
@@ -90,5 +90,10 @@ urlpatterns +=[
 urlpatterns +=[
 
     path('trailer/movies',TrailerAPIView.as_view()),
+
+]
+
+urlpatterns +=[
+    path('hello', HelloWorld.as_view()),
 
 ]
