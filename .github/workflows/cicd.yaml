@@ -17,7 +17,7 @@ jobs:
           username: ${{ secrets.USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd /var/www/maxsud/
+            cd /var/www/maxsud/aslmedia
             git pull 
             source /var/www/maxsud/aslmedia/.venv/bin/activate
             pip install -r rq.txt
