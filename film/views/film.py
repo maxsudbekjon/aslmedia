@@ -102,5 +102,5 @@ class VideoStreamAPIView(APIView):
 
 
 class HelloWorld(APIView):
-    def get(self):
+    def get(self , request):
         return Response({"message" : "Hello world"})
