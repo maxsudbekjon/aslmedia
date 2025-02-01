@@ -18,7 +18,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd /var/www/maxsud/aslmedia
-            git reset --hard origin/
+            git reset --hard origin/main
             git pull 
             source /var/www/maxsud/aslmedia/.venv/bin/activate
             pip install -r rq.txt
