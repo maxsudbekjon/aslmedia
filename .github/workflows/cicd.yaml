@@ -1,0 +1,25 @@
+name: Drf aslmedia CI/CD Deployment
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+       - name: executing remote ssh commands using ssh-key
+         uses: appleboy/ssh-action@v0.1.10
+         with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd /var/www/maxsud/
+            git pull 
+            source /var/www/maxsud/aslmedia/.venv/bin/activate
+            pip install -r rq.txt
+            systemctl restart nginx.service
+            systemctl restart aslmedia.service
