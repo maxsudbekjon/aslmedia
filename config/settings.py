@@ -156,8 +156,8 @@ REST_FRAMEWORK = {
 
 
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'Sizning API nomingiz',
-    'DESCRIPTION': 'Sizning API tavsifi',
+    'TITLE': 'P25 Sizning API nomingiz',
+    'DESCRIPTION': 'P25 Sizning API tavsifi',
     'VERSION': '1.0.0',
     'SERVE_PERMISSIONS': ['rest_framework.permissions.AllowAny'],
     'SCHEMA_PATH_PREFIX': '/api',
