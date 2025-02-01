@@ -59,7 +59,7 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = 100000
 WSGI_APPLICATION = 'config.wsgi.application'
 
 
-
+# test
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
