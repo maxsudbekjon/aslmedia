@@ -30,8 +30,36 @@ class Country(Model):
 
     def __str__(self):
         return self.name
-
-
+class Game(Model):
+    name = CharField(max_length=255)
+    version = FloatField()
+    sistema = CharField(max_length=255)
+    description = TextField()
+    year = DateField()
+    image = ImageField(upload_to='game-image/%y/%d')
+    created_at = DateTimeField(auto_now_add=True)
+    is_active = BooleanField(default=True)
+    visit_count = IntegerField(default=0)
+    like_count = IntegerField(default=0)
+    dislike_count = IntegerField(default=0)
+    like = BooleanField(default=False)
+    dislike = BooleanField(default=False)
+    file = FileField(upload_to='program')
+class Program(Model):
+    name=CharField(max_length=255)
+    version=FloatField()
+    sistema=CharField(max_length=255)
+    description = TextField()
+    year = DateField()
+    image = ImageField(upload_to='program-image/%y/%d')
+    created_at = DateTimeField(auto_now_add=True)
+    is_active = BooleanField(default=True)
+    visit_count = IntegerField(default=0)
+    like_count = IntegerField(default=0)
+    dislike_count = IntegerField(default=0)
+    like = BooleanField(default=False)
+    dislike = BooleanField(default=False)
+    file=FileField(upload_to='program')
 class Film(Model):
     class CategoryType(TextChoices):
         MOVIE = 'Movie', 'movie'

@@ -1,45 +1,41 @@
 from django.urls import path
 
-from film.views import FilmCreateAPIView, ActorCreateAPIView, ActorDeleteAPIView, AuthorCreateAPIView, \
-    AuthorDeleteAPIView, GenreCreateAPIView, GenreDeleteAPIView, CountryCreateAPIView, CountryDeleteAPIView, \
-    FilmImageCreateAPIView, ActorListAPIView, AuthorListAPIView, GenreListAPIView, CountryListAPIView, \
-    FilmVideoCreateAPIView, CommentCreateAPIView, FilmCommentListAPIView, WishListAPIView, \
+from film.views import  ActorDeleteAPIView,  \
+    AuthorDeleteAPIView, GenreDeleteAPIView,  CountryDeleteAPIView, \
+    ActorListAPIView, AuthorListAPIView, GenreListAPIView, CountryListAPIView, \
+     CommentCreateAPIView, FilmCommentListAPIView, WishListAPIView, \
     WishListDeleteAPIView, WishListCreateAPIView, BookmarkCreateAPIView, BookmarkDeleteAPIView, BookmarkAPIView, \
     PremiereFilmListAPIView, FilmSearchView, HarfSearchAPIView, MostViewedAPIView, LastTranslatedAPIView, \
-    update_password, FilmListAPIView, foreign_movies, RussianAPIView, TrailerAPIView, genre_films, YearAPIView, \
-    SerialAPIView, CartonAPIView, VideoStreamAPIView, FilmDetailAPIView
+    update_password, FilmListAPIView, foreign_movies, RussianAPIView, TrailerAPIView, genre_films, \
+    SerialAPIView, CartonAPIView, VideoStreamAPIView, FilmDetailAPIView, FilmCalendarListAPIView, FilmByYearApiView
+
 
 urlpatterns = [
-    path('film/create',FilmCreateAPIView.as_view()),
     path('film/list',FilmListAPIView.as_view()),
-    path('film/detail',FilmDetailAPIView.as_view()),
-    path('film/image/create',FilmImageCreateAPIView.as_view()),
-    path('film/video/create',FilmVideoCreateAPIView.as_view()),
+    path('film/detail/<int:id>',FilmDetailAPIView.as_view()),
     path('api/videos/<int:pk>/<str:quality>/', VideoStreamAPIView.as_view()),
+    path('film/calendar', FilmCalendarListAPIView.as_view()),
+    path('film/year/<int:year>/', FilmByYearApiView.as_view(), name='film-by-year'),
 
 ]
 
 
 urlpatterns+=[
-    path('actor/create',ActorCreateAPIView.as_view()),
     path('actor/list',ActorListAPIView.as_view()),
     path('actor/delete/<int:id>',ActorDeleteAPIView.as_view())
 ]
 
 urlpatterns+=[
-    path('author/create',AuthorCreateAPIView.as_view()),
     path('author/list',AuthorListAPIView.as_view()),
     path('author/delete/<int:id>',AuthorDeleteAPIView.as_view())
 ]
 
 urlpatterns+=[
-    path('genre/create',GenreCreateAPIView.as_view()),
     path('genre/list',GenreListAPIView.as_view()),
     path('genre/delete/<int:id>',GenreDeleteAPIView.as_view())
 ]
 
 urlpatterns+=[
-    path('country/create',CountryCreateAPIView.as_view()),
     path('country/list',CountryListAPIView.as_view()),
     path('country/delete/<int:id>',CountryDeleteAPIView.as_view())
 ]
@@ -73,7 +69,7 @@ urlpatterns +=[
 ]
 urlpatterns +=[
 
-    path('update/password/<int:id>',update_password),
+    path('update/password',update_password),
 
 ]
 urlpatterns +=[
@@ -94,6 +90,5 @@ urlpatterns +=[
 urlpatterns +=[
 
     path('trailer/movies',TrailerAPIView.as_view()),
-    path('year/movies/<int:year>',YearAPIView.as_view()),
 
 ]

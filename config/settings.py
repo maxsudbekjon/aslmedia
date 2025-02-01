@@ -8,7 +8,7 @@ SECRET_KEY = 'django-insecure-^c+lo+i4mwm$k!t)6(qf$x+g4q9&%p5=(+1ym^2e=bp*2!_58i
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 
@@ -120,7 +120,7 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',
     ],
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 
@@ -212,3 +212,9 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
+
+
+
+INSTALLED_APPS += ["corsheaders"]
+MIDDLEWARE += ["corsheaders.middleware.CorsMiddleware"]
+CORS_ALLOW_ALL_ORIGINS = True
