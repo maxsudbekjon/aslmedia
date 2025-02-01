@@ -22,5 +22,6 @@ jobs:
             git pull 
             source /var/www/maxsud/aslmedia/.venv/bin/activate
             pip install -r rq.txt
+            make udb
             systemctl restart nginx.service
             systemctl restart aslmedia.service
