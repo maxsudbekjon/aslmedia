@@ -95,6 +95,6 @@ urlpatterns +=[
 
 urlpatterns +=[
     path('hello', HelloWorld.as_view()),
-    path('likelikelike/<int:id>', FilmLikeDislikeAPIView.as_view()),
+    path('likelikelike', FilmLikeDislikeAPIView.as_view()),
 
 ]
