@@ -210,7 +210,7 @@ class FilmByYearApiView(ListAPIView):
     def get_queryset(self):
         year = self.kwargs.get('year')
         return Film.objects.filter(year__year=year)
-@extend_schema(tags=['like'],request=LikeSerializer)
+@extend_schema(tags=['like'])
 class FilmLikeDislikeAPIView(APIView):
     @extend_schema(
         request=LikeSerializer,
