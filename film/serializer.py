@@ -85,3 +85,6 @@ class FilmCalendarModelSerializer(ModelSerializer):
     class Meta:
         model=Film
         fields='name','image','year','like_count','dislike_count','translate_year'
+class LikeSerializer(Serializer):
+    like=BooleanField(default=False)
+    dis_like=BooleanField(default=False)

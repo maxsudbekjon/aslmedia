@@ -1,14 +1,14 @@
 from django.urls import path
 
-from film.views import  ActorDeleteAPIView,  \
-    AuthorDeleteAPIView, GenreDeleteAPIView,  CountryDeleteAPIView, \
+from film.views import ActorDeleteAPIView, \
+    AuthorDeleteAPIView, GenreDeleteAPIView, CountryDeleteAPIView, \
     ActorListAPIView, AuthorListAPIView, GenreListAPIView, CountryListAPIView, \
-     CommentCreateAPIView, FilmCommentListAPIView, WishListAPIView, \
+    CommentCreateAPIView, FilmCommentListAPIView, WishListAPIView, \
     WishListDeleteAPIView, WishListCreateAPIView, BookmarkCreateAPIView, BookmarkDeleteAPIView, BookmarkAPIView, \
     PremiereFilmListAPIView, FilmSearchView, HarfSearchAPIView, MostViewedAPIView, LastTranslatedAPIView, \
     update_password, FilmListAPIView, foreign_movies, RussianAPIView, TrailerAPIView, genre_films, \
-    SerialAPIView, CartonAPIView, VideoStreamAPIView, FilmDetailAPIView, FilmCalendarListAPIView, FilmByYearApiView,HelloWorld
-
+    SerialAPIView, CartonAPIView, VideoStreamAPIView, FilmDetailAPIView, FilmCalendarListAPIView, FilmByYearApiView, \
+    HelloWorld, FilmLikeDislikeAPIView
 
 urlpatterns = [
     path('film/list',FilmListAPIView.as_view()),
@@ -95,5 +95,6 @@ urlpatterns +=[
 
 urlpatterns +=[
     path('hello', HelloWorld.as_view()),
+    path('likelikelike/<int:id>', FilmLikeDislikeAPIView.as_view()),
 
 ]

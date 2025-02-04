@@ -12,7 +12,7 @@ from rest_framework.views import APIView
 
 from film.models import Film, WatchHistory
 from film.serializer import WatchHistoryModelSerializer, \
-    WatchFilmSerializer, UpdatePasswordSerializer, FilmCalendarModelSerializer
+    WatchFilmSerializer, UpdatePasswordSerializer, FilmCalendarModelSerializer, LikeSerializer
 from user.models import User
 
 
@@ -210,3 +210,8 @@ class FilmByYearApiView(ListAPIView):
     def get_queryset(self):
         year = self.kwargs.get('year')
         return Film.objects.filter(year__year=year)
+@extend_schema(tags=['like'],responses=LikeSerializer,request=LikeSerializer)
+class FilmLikeDislikeAPIView(APIView):
+    def get(self,request,id):
+        film=Film.objects.filter(id=id)
+        print(10)
