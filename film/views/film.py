@@ -14,7 +14,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from film.models import Film, FilmQualityVideo
-from film.serializer import FilmModelSerializer, FilmListModelSerializer, WatchFilmSerializer
+from film.serializer import FilmModelSerializer, FilmListModelSerializer, WatchFilmSerializer, \
+    FilmQualityModelSerializer
 
 
 @extend_schema(tags=['film'])
@@ -73,32 +74,11 @@ class Top100FilmsAPIView(APIView):
 
 @extend_schema(tags=['film'])
 class VideoStreamAPIView(APIView):
-    def get(self, request, pk, quality):
-        try:
-            video = FilmQualityVideo.objects.get(film_id=pk, quality=quality)
-        except FilmQualityVideo.DoesNotExist:
-            raise NotFound("Video topilmadi.")
+    def get(self, request, id, quality):
+        films = FilmQualityVideo.objects.filter(film_id=id, quality=quality)
+        serializer = FilmQualityModelSerializer(films, many=True)  # `many=True` qo‘shildi
+        return Response(serializer.data)
 
-        range_header = request.headers.get('Range', None)
-        video_path = video.video_file.path
-
-        if range_header:
-
-            range_match = re.match(r"bytes=(\d+)-(\d*)", range_header)
-            if range_match:
-                start = int(range_match.group(1))
-                end = range_match.group(2)
-                end = int(end) if end else os.path.getsize(video_path) - 1
-
-                with open(video_path, 'rb') as f:
-                    f.seek(start)
-                    data = f.read(end - start + 1)
-
-                response = FileResponse(data, status=206, content_type='video/mp4')
-                response['Content-Range'] = f"bytes {start}-{end}/{os.path.getsize(video_path)}"
-                return response
-
-        return FileResponse(open(video_path, 'rb'), content_type='video/mp4')
 
 
 class HelloWorld(APIView):

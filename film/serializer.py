@@ -88,3 +88,7 @@ class FilmCalendarModelSerializer(ModelSerializer):
 class LikeSerializer(Serializer):
     like=BooleanField()
     dis_like=BooleanField()
+class FilmQualityModelSerializer(ModelSerializer):
+    class Meta:
+        model=FilmQualityVideo
+        fields='__all__'
