@@ -10,7 +10,7 @@ from rest_framework.generics import CreateAPIView, ListAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from film.models import Film, WatchHistory
+from film.models import Film, WatchHistory, LikeDislike
 from film.serializer import WatchHistoryModelSerializer, \
     WatchFilmSerializer, UpdatePasswordSerializer, FilmCalendarModelSerializer, LikeSerializer
 from user.models import User
@@ -210,8 +210,47 @@ class FilmByYearApiView(ListAPIView):
     def get_queryset(self):
         year = self.kwargs.get('year')
         return Film.objects.filter(year__year=year)
-@extend_schema(tags=['like'],responses=LikeSerializer,request=LikeSerializer)
+@extend_schema(tags=['like'],request=LikeSerializer)
 class FilmLikeDislikeAPIView(APIView):
-    def get(self,request,id):
-        film=Film.objects.filter(id=id)
-        print(10)
+    @extend_schema(
+        request=LikeSerializer,
+        responses={200: LikeSerializer},
+        description="Film uchun like/dislike qo'shish yoki o'chirish"
+    )
+    def post(self, request, id):
+        serializer = LikeSerializer(data=request.data)
+        if serializer.is_valid():
+            like = serializer.validated_data.get("like")
+            dislike = serializer.validated_data.get("dis_like")
+
+            try:
+                film = Film.objects.get(id=id)
+            except Film.DoesNotExist:
+                return Response({"error": "Film topilmadi"}, status=status.HTTP_404_NOT_FOUND)
+
+            user = request.user  # Hozirgi foydalanuvchi
+            like_dislike, created = LikeDislike.objects.get_or_create(user=user, film=film)
+
+            if like:
+                if like_dislike.is_like is False:
+                    film.dislike_count -= 1  # Avval dislike bosgan bo‘lsa, kamaytirish
+                if like_dislike.is_like is not True:
+                    film.like_count += 1  # Yangi like bosildi
+                    like_dislike.is_like = True
+
+            elif dislike:
+                if like_dislike.is_like is True:
+                    film.like_count -= 1  # Avval like bosgan bo‘lsa, kamaytirish
+                if like_dislike.is_like is not False:
+                    film.dislike_count += 1  # Yangi dislike bosildi
+                    like_dislike.is_like = False
+
+            film.save()
+            like_dislike.save()
+
+            return Response({
+                "like_count": film.like_count,
+                "dislike_count": film.dislike_count
+            }, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

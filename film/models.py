@@ -3,6 +3,8 @@ from django.db.models import IntegerField, FileField, DateField, FloatField
 from django.db.models import Model, DateTimeField, BooleanField, TextChoices, CharField, ForeignKey, CASCADE, \
     TextField, ManyToManyField, PositiveIntegerField, DurationField, ImageField
 
+from user.models import User
+
 
 class Actor(Model):
     name = CharField(max_length=255)
@@ -135,3 +137,10 @@ class WatchHistory(Model):
     user = ForeignKey('user.User', on_delete=CASCADE, related_name='watch_history')
     film = ForeignKey('film.Film', on_delete=CASCADE, related_name='watched_by_users')
     watched_at = DateTimeField(auto_now_add=True)
+class LikeDislike(Model):
+    user = ForeignKey(User, on_delete=CASCADE)
+    film = ForeignKey(Film, on_delete=CASCADE)
+    is_like = BooleanField(null=True)
+
+    class Meta:
+        unique_together = ('user', 'film')
